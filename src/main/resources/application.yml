@@ -1,0 +1,55 @@
+server:
+  port: 9600
+  servlet:
+    context-path: /food-source
+spring:
+  application:
+    name: FoodProject
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/food_project?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  ai:
+    ollama:
+      base-url: http://127.0.0.1:11434
+      chat:
+        options:
+          model: qwen2.5:7b
+      embedding:
+        options:
+          model: qwen3-embedding:4b
+    milvus:
+      url: localhost
+      port: 19530
+      user: root
+      password: 123456
+      collection-name: food_knowledge_base
+      database-name: default
+
+  http:
+    client:
+      connect-timeout: 60s
+      read-timeout: 120s
+
+rerank:
+  base-url: http://127.0.0.1:8000
+  model: Qwen/Qwen3-Reranker-4B
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# JWT配置
+jwt:
+  secret: foodprojectsecretecretkeyfoodprojectsecretkey
+  expiration: 86400 # 24小时 (秒)
+  header: Authorization
+  prefix: 'Bearer '
+
+logging:
+  level:
+    com.example.foodproject: warn
